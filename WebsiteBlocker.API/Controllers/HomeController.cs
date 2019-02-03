@@ -17,7 +17,7 @@ namespace WebsiteBlocker.API.Controllers
             WebsiteBlockerFacade = websiteBlockerFacade;
         }
 
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(400)]
         public IActionResult CheckWebsite(string url)
         {

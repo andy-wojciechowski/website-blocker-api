@@ -5,7 +5,7 @@ using Moq;
 using WebsiteBlocker.Domain.Interfaces.Facades;
 using WebsiteBlocker.Domain.Dtos;
 
-namespace WebsiteBlocker.API.Tests
+namespace WebsiteBlocker.API.Tests.Controllers
 {
     [TestClass]
     public class HomeControllerTests
