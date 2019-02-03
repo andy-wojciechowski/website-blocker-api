@@ -2,7 +2,7 @@
 using Moq;
 using System;
 using System.Collections.Generic;
-using WebsiteBlocker.Domain.Interfaces;
+using WebsiteBlocker.Domain.Interfaces.Checks;
 using WebsiteBlocker.Domain.Services;
 
 namespace WebsiteBlocker.Domain.Tests.Services
@@ -101,7 +101,7 @@ namespace WebsiteBlocker.Domain.Tests.Services
         private IWebsiteBlockerCheck CreateMockedCheck(string url, bool checkResult)
         {
             var mockedCheck = new Mock<IWebsiteBlockerCheck>();
-            mockedCheck.Setup(x => x.CheckWebsite(url)).Returns(checkResult);
+            mockedCheck.Setup(x => x.ShouldWebsiteBeBlocked(url)).Returns(checkResult);
             return mockedCheck.Object;
         }
 

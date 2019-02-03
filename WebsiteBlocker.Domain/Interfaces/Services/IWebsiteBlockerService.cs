@@ -1,4 +1,6 @@
-﻿namespace WebsiteBlocker.Domain.Interfaces.Services
+﻿using WebsiteBlocker.Domain.Interfaces.Checks;
+
+namespace WebsiteBlocker.Domain.Interfaces.Services
 {
     public interface IWebsiteBlockerService
     {

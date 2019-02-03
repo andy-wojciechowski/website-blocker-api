@@ -8,75 +8,75 @@ namespace WebsiteBlocker.Domain.Tests.Checks
     [TestClass]
     public class WhitelistedSiteCheckTests
     {
-        #region - CheckWebsite -
+        #region - ShouldWebsiteBeBlocked -
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public void Test_CheckWebsite_NullUrl()
+        public void Test_ShouldWebsiteBeBlocked_NullUrl()
         {
             //Arrange
             var check = new WhitelistedSiteCheck(new List<string>());
 
             //Act
-            check.CheckWebsite(null);
+            check.ShouldWebsiteBeBlocked(null);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public void Test_CheckWebsite_NullSites()
+        public void Test_ShouldWebsiteBeBlocked_NullSites()
         {
             //Arrange
             var check = new WhitelistedSiteCheck(null);
 
             //Act
-            check.CheckWebsite("http://google.com");
+            check.ShouldWebsiteBeBlocked("http://google.com");
         }
 
         [TestMethod]
-        public void Test_CheckWebsite_SingleSite_DoesntMatch()
+        public void Test_ShouldWebsiteBeBlocked_SingleSite_DoesntMatch()
         {
             //Arrange
             var check = new WhitelistedSiteCheck(new List<string>() { "http://website.com" });
 
             //Act
-            var result = check.CheckWebsite("http://google.com");
+            var result = check.ShouldWebsiteBeBlocked("http://google.com");
 
             //Assert
             Assert.IsTrue(result);
         }
 
         [TestMethod]
-        public void Test_CheckWebsite_SingleSite_DoesMatch()
+        public void Test_ShouldWebsiteBeBlocked_SingleSite_DoesMatch()
         {
             //Arrange
             var check = new WhitelistedSiteCheck(new List<string>() { "http://google.com" });
 
             //Act
-            var result = check.CheckWebsite("http://google.com");
+            var result = check.ShouldWebsiteBeBlocked("http://google.com");
 
             //Assert
             Assert.IsFalse(result);
         }
 
         [TestMethod]
-        public void Test_CheckWebsite_SingleWord_WordMatches_DifferentCase()
+        public void Test_ShouldWebsiteBeBlocked_SingleWord_WordMatches_DifferentCase()
         {
             //Arrange
             var check = new WhitelistedSiteCheck(new List<string>() { "http://GOOGLE.com" });
 
             //Act
-            var result = check.CheckWebsite("http://google.com");
+            var result = check.ShouldWebsiteBeBlocked("http://google.com");
 
             //Assert
             Assert.IsFalse(result);
         }
 
         [TestMethod]
-        public void Test_CheckWebsite_MultipleWords_Matches()
+        public void Test_ShouldWebsiteBeBlocked_MultipleWords_Matches()
         {
             //Arrange
             var check = new WhitelistedSiteCheck(new List<string>() { "http://blah.com", "http://google.com" });
 
             //Act
-            var result = check.CheckWebsite("http://google.com");
+            var result = check.ShouldWebsiteBeBlocked("http://google.com");
 
             //Assert
             Assert.IsFalse(result);

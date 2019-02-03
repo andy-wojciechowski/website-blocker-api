@@ -6,7 +6,7 @@ using System.Linq;
 using WebsiteBlocker.Domain.Checks;
 using WebsiteBlocker.Domain.Dtos;
 using WebsiteBlocker.Domain.Facades;
-using WebsiteBlocker.Domain.Interfaces;
+using WebsiteBlocker.Domain.Interfaces.Checks;
 using WebsiteBlocker.Domain.Interfaces.Factories;
 using WebsiteBlocker.Domain.Interfaces.Services;
 

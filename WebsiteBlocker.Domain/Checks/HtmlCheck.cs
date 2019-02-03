@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-using WebsiteBlocker.Domain.Interfaces;
+using WebsiteBlocker.Domain.Interfaces.Checks;
 
 namespace WebsiteBlocker.Domain.Checks
 {
@@ -18,7 +18,7 @@ namespace WebsiteBlocker.Domain.Checks
             BlacklistedWords = blacklistedWords;
         }
 
-        public bool CheckWebsite(string url)
+        public bool ShouldWebsiteBeBlocked(string url)
         {
             if(url == null || this.BlacklistedWords == null) throw new ArgumentNullException();
 

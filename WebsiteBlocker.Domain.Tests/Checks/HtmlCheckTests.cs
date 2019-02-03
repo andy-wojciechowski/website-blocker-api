@@ -11,30 +11,30 @@ namespace WebsiteBlocker.Domain.Tests.Checks
     [TestClass]
     public class HtmlCheckTests
     {
-        #region - CheckWebsite -
+        #region - ShouldWebsiteBeBlocked -
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public void Test_CheckWebsite_NullUrl()
+        public void Test_ShouldWebsiteBeBlocked_NullUrl()
         {
             //Arrange
             var check = new HtmlCheck(new List<string>());
 
             //Act
-            check.CheckWebsite(null);
+            check.ShouldWebsiteBeBlocked(null);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
-        public void Test_CheckWebsite_NullBlacklistedWords()
+        public void Test_ShouldWebsiteBeBlocked_NullBlacklistedWords()
         {
             //Arrange
             var check = new HtmlCheck(null);
 
             //Act
-            check.CheckWebsite("http://google.com");
+            check.ShouldWebsiteBeBlocked("http://google.com");
         }
 
         [TestMethod, ExpectedException(typeof(InvalidOperationException))]
-        public void Test_CheckWebsite_NullHtmlStream()
+        public void Test_ShouldWebsiteBeBlocked_NullHtmlStream()
         {
             //Arrange
             var check = new Mock<HtmlCheck>(new List<string>() { "blacklisted word" });
@@ -42,11 +42,11 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             check.Setup(x => x.ReadHtml("http://google.com")).Returns((Stream)null);
 
             //Act
-            check.Object.CheckWebsite("http://google.com");
+            check.Object.ShouldWebsiteBeBlocked("http://google.com");
         }
 
         [TestMethod]
-        public void Test_CheckWebsite_FalseResult_SingleNode()
+        public void Test_ShouldWebsiteBeBlocked_FalseResult_SingleNode()
         {
             //Arrange
             var check = new Mock<HtmlCheck>(new List<string>() { "blacklisted word" });
@@ -57,14 +57,14 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             check.Setup(x => x.LoadHtmlDocument(It.IsAny<Stream>())).Returns(document);
 
             //Act
-            var result = check.Object.CheckWebsite("http://somewebsite.com");
+            var result = check.Object.ShouldWebsiteBeBlocked("http://somewebsite.com");
 
             //Assert
             Assert.IsFalse(result);
         }
 
         [TestMethod]
-        public void Test_CheckWebsite_TrueResult_SameCase_SingleNode()
+        public void Test_ShouldWebsiteBeBlocked_TrueResult_SameCase_SingleNode()
         {
             var check = new Mock<HtmlCheck>(new List<string>() { "blacklisted word" });
             var document = new HtmlDocument();
@@ -74,14 +74,14 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             check.Setup(x => x.LoadHtmlDocument(It.IsAny<Stream>())).Returns(document);
 
             //Act
-            var result = check.Object.CheckWebsite("http://somewebsite.com");
+            var result = check.Object.ShouldWebsiteBeBlocked("http://somewebsite.com");
 
             //Assert
             Assert.IsTrue(result);
         }
 
         [TestMethod]
-        public void Test_CheckWebsite_TrueResult_DifferentCase_SingleNode()
+        public void Test_ShouldWebsiteBeBlocked_TrueResult_DifferentCase_SingleNode()
         {
             var check = new Mock<HtmlCheck>(new List<string>() { "blacklisted word" });
             var document = new HtmlDocument();
@@ -91,14 +91,14 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             check.Setup(x => x.LoadHtmlDocument(It.IsAny<Stream>())).Returns(document);
 
             //Act
-            var result = check.Object.CheckWebsite("http://somewebsite.com");
+            var result = check.Object.ShouldWebsiteBeBlocked("http://somewebsite.com");
 
             //Assert
             Assert.IsTrue(result);
         }
 
         [TestMethod]
-        public void Test_CheckWebsite_FalseResult_MultipleNodes()
+        public void Test_ShouldWebsiteBeBlocked_FalseResult_MultipleNodes()
         {
             var check = new Mock<HtmlCheck>(new List<string>() { "blacklisted word" });
             var document = new HtmlDocument();
@@ -108,14 +108,14 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             check.Setup(x => x.LoadHtmlDocument(It.IsAny<Stream>())).Returns(document);
 
             //Act
-            var result = check.Object.CheckWebsite("http://somewebsite.com");
+            var result = check.Object.ShouldWebsiteBeBlocked("http://somewebsite.com");
 
             //Assert
             Assert.IsFalse(result);
         }
 
         [TestMethod]
-        public void Test_CheckWebsite_TrueResult_MultipleNodes()
+        public void Test_ShouldWebsiteBeBlocked_TrueResult_MultipleNodes()
         {
             var check = new Mock<HtmlCheck>(new List<string>() { "blacklisted word" });
             var document = new HtmlDocument();
@@ -125,7 +125,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             check.Setup(x => x.LoadHtmlDocument(It.IsAny<Stream>())).Returns(document);
 
             //Act
-            var result = check.Object.CheckWebsite("http://somewebsite.com");
+            var result = check.Object.ShouldWebsiteBeBlocked("http://somewebsite.com");
 
             //Assert
             Assert.IsTrue(result);

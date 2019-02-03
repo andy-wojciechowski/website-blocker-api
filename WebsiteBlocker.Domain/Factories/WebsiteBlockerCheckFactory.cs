@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using WebsiteBlocker.Domain.Checks;
-using WebsiteBlocker.Domain.Interfaces;
+using WebsiteBlocker.Domain.Interfaces.Checks;
 using WebsiteBlocker.Domain.Interfaces.Factories;
 
 namespace WebsiteBlocker.Domain.Factories

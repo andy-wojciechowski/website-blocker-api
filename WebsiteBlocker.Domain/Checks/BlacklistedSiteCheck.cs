@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using WebsiteBlocker.Domain.Interfaces;
+using WebsiteBlocker.Domain.Interfaces.Checks;
 
 namespace WebsiteBlocker.Domain.Checks
 {
@@ -15,7 +15,7 @@ namespace WebsiteBlocker.Domain.Checks
             this.BlacklistedSites = blacklistedSites;
         }
 
-        public bool CheckWebsite(string url)
+        public bool ShouldWebsiteBeBlocked(string url)
         {
             if (url == null || this.BlacklistedSites == null) throw new ArgumentNullException();
 

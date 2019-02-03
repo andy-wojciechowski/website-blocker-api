@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using WebsiteBlocker.Domain.Interfaces.Checks;
 
 namespace WebsiteBlocker.Domain.Interfaces.Factories
 {

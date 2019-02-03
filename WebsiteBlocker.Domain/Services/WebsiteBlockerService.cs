@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using WebsiteBlocker.Domain.Interfaces;
+using WebsiteBlocker.Domain.Interfaces.Checks;
 using WebsiteBlocker.Domain.Interfaces.Services;
 
 namespace WebsiteBlocker.Domain.Services
@@ -11,7 +11,7 @@ namespace WebsiteBlocker.Domain.Services
         {
             if(url == null || checks.Any(x => x is null)) throw new ArgumentNullException();
 
-            return checks.Any(x => x.CheckWebsite(url));
+            return checks.Any(x => x.ShouldWebsiteBeBlocked(url));
         }
     }
 }
