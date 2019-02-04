@@ -4,6 +4,8 @@ using WebsiteBlocker.API.Controllers;
 using Moq;
 using WebsiteBlocker.Domain.Interfaces.Facades;
 using WebsiteBlocker.Domain.Dtos;
+using WebsiteBlocker.API.Models;
+using System.Collections.Generic;
 
 namespace WebsiteBlocker.API.Tests.Controllers
 {
@@ -58,7 +60,8 @@ namespace WebsiteBlocker.API.Tests.Controllers
             var url = "http://google.com";
 
             var websiteBlockerFacade = MockWebsiteBlockerFacade(url, false);
-            var controller = CreateHomeController(websiteBlockerFacade);
+            var appSettings = new WebsiteBlockerAppSettings() { BlacklistedSites = new List<string>(), BlacklistedWords = new List<string>(), WhitelistedSites = new List<string>() };
+            var controller = CreateHomeController(websiteBlockerFacade, appSettings);
 
             //Act
             var result = controller.CheckWebsite(url);
@@ -74,7 +77,8 @@ namespace WebsiteBlocker.API.Tests.Controllers
             var url = "https://google.com";
 
             var websiteBlockerFacade = MockWebsiteBlockerFacade(url, true);
-            var controller = CreateHomeController(websiteBlockerFacade);
+            var appSettings = new WebsiteBlockerAppSettings() { BlacklistedSites = new List<string>(), BlacklistedWords = new List<string>(), WhitelistedSites = new List<string>() };
+            var controller = CreateHomeController(websiteBlockerFacade, appSettings);
 
             //Act
             var result = controller.CheckWebsite(url);
@@ -96,9 +100,9 @@ namespace WebsiteBlocker.API.Tests.Controllers
             Assert.AreEqual(expectedResult, (bool)okResult.Value);
         }
 
-        private HomeController CreateHomeController(IWebsiteBlockerFacade websiteBlockerFacade = null)
+        private HomeController CreateHomeController(IWebsiteBlockerFacade websiteBlockerFacade = null, WebsiteBlockerAppSettings appSettings = null)
         {
-            return new HomeController(websiteBlockerFacade);
+            return new HomeController(websiteBlockerFacade, appSettings);
         }
 
         private IWebsiteBlockerFacade MockWebsiteBlockerFacade(string url, bool websiteBlockedValue)

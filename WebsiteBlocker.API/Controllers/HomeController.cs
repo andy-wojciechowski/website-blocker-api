@@ -2,6 +2,7 @@
 using System;
 using WebsiteBlocker.Domain.Interfaces.Facades;
 using WebsiteBlocker.Domain.Dtos;
+using WebsiteBlocker.API.Models;
 
 namespace WebsiteBlocker.API.Controllers
 {
@@ -11,10 +12,12 @@ namespace WebsiteBlocker.API.Controllers
     public class HomeController : ControllerBase
     {
         private IWebsiteBlockerFacade WebsiteBlockerFacade { get; }
+        private WebsiteBlockerAppSettings AppSettings { get; }
 
-        public HomeController(IWebsiteBlockerFacade websiteBlockerFacade)
+        public HomeController(IWebsiteBlockerFacade websiteBlockerFacade, WebsiteBlockerAppSettings appSettings)
         {
             WebsiteBlockerFacade = websiteBlockerFacade;
+            AppSettings = appSettings;
         }
 
         [HttpGet]
@@ -24,7 +27,12 @@ namespace WebsiteBlocker.API.Controllers
             if(url == null || !IsValidUrl(url))
                 return BadRequest();
 
-            var result = WebsiteBlockerFacade.ShouldWebsiteBeBlocked(new WebsiteBlockerRequestDto() { Url = url});
+            var result = WebsiteBlockerFacade.ShouldWebsiteBeBlocked(new WebsiteBlockerRequestDto() {
+                Url = url,
+                BlacklistedSites = AppSettings.BlacklistedSites,
+                BlacklistedWords = AppSettings.BlacklistedWords,
+                WhitelistedSites = AppSettings.WhitelistedSites
+            });
 
             return Ok(result);
         }

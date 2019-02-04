@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebsiteBlocker.API.Models;
 using WebsiteBlocker.Domain.Facades;
 using WebsiteBlocker.Domain.Factories;
 using WebsiteBlocker.Domain.Interfaces.Facades;
@@ -28,6 +29,8 @@ namespace WebsiteBlocker.API
             services.AddScoped<IWebsiteBlockerFacade, WebsiteBlockerFacade>();
             services.AddScoped<IWebsiteBlockerService, WebsiteBlockerService>();
             services.AddScoped<IWebsiteBlockerCheckFactory, WebsiteBlockerCheckFactory>();
+            //TODO: Add a way to change these settings.
+            services.Configure<WebsiteBlockerAppSettings>(this.Configuration.GetSection("AppSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
