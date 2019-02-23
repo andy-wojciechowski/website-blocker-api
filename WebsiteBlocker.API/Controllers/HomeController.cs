@@ -3,6 +3,7 @@ using System;
 using WebsiteBlocker.Domain.Interfaces.Facades;
 using WebsiteBlocker.Domain.Dtos;
 using WebsiteBlocker.API.Models;
+using Microsoft.Extensions.Options;
 
 namespace WebsiteBlocker.API.Controllers
 {
@@ -12,9 +13,9 @@ namespace WebsiteBlocker.API.Controllers
     public class HomeController : ControllerBase
     {
         private IWebsiteBlockerFacade WebsiteBlockerFacade { get; }
-        private WebsiteBlockerAppSettings AppSettings { get; }
+        private IOptions<WebsiteBlockerAppSettings> AppSettings { get; }
 
-        public HomeController(IWebsiteBlockerFacade websiteBlockerFacade, WebsiteBlockerAppSettings appSettings)
+        public HomeController(IWebsiteBlockerFacade websiteBlockerFacade, IOptions<WebsiteBlockerAppSettings> appSettings)
         {
             WebsiteBlockerFacade = websiteBlockerFacade;
             AppSettings = appSettings;
@@ -22,16 +23,16 @@ namespace WebsiteBlocker.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(400)]
-        public IActionResult CheckWebsite(string url)
+        public IActionResult CheckWebsite([FromBody]string url)
         {
             if(url == null || !IsValidUrl(url))
                 return BadRequest();
 
             var result = WebsiteBlockerFacade.ShouldWebsiteBeBlocked(new WebsiteBlockerRequestDto() {
                 Url = url,
-                BlacklistedSites = AppSettings.BlacklistedSites,
-                BlacklistedWords = AppSettings.BlacklistedWords,
-                WhitelistedSites = AppSettings.WhitelistedSites
+                BlacklistedSites = AppSettings.Value.BlacklistedSites,
+                BlacklistedWords = AppSettings.Value.BlacklistedWords,
+                WhitelistedSites = AppSettings.Value.WhitelistedSites
             });
 
             return Ok(result);
