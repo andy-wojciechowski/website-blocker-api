@@ -31,6 +31,7 @@ namespace WebsiteBlocker.API
             services.AddScoped<IWebsiteBlockerCheckFactory, WebsiteBlockerCheckFactory>();
             //TODO: Add a way to change these settings.
             services.Configure<WebsiteBlockerAppSettings>(this.Configuration.GetSection("AppSettings"));
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
