@@ -21,7 +21,7 @@ namespace WebsiteBlocker.API.Controllers
             AppSettings = appSettings;
         }
 
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(400)]
         public IActionResult CheckWebsite([FromBody]string url)
         {
