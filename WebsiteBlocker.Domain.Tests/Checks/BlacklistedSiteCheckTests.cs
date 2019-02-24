@@ -17,7 +17,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new BlacklistedSiteCheck(new List<string>());
 
             //Act
-            check.ShouldWebsiteBeBlocked(null);
+            check.ValidateUrl(null);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
@@ -27,7 +27,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new BlacklistedSiteCheck(null);
 
             //Act
-            check.ShouldWebsiteBeBlocked("http://google.com");
+            check.ValidateUrl("http://google.com");
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new BlacklistedSiteCheck(new List<string>() { "word" });
 
             //Act
-            var result = check.ShouldWebsiteBeBlocked("http://google.com");
+            var result = check.ValidateUrl("http://google.com");
 
             //Assert
             Assert.IsFalse(result);
@@ -50,7 +50,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new BlacklistedSiteCheck(new List<string>() { "google" });
 
             //Act
-            var result = check.ShouldWebsiteBeBlocked("http://google.com");
+            var result = check.ValidateUrl("http://google.com");
 
             //Assert
             Assert.IsTrue(result);
@@ -63,7 +63,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new BlacklistedSiteCheck(new List<string>() { "GOOGLE" });
 
             //Act
-            var result = check.ShouldWebsiteBeBlocked("http://google.com");
+            var result = check.ValidateUrl("http://google.com");
 
             //Assert
             Assert.IsTrue(result);
@@ -76,7 +76,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new BlacklistedSiteCheck(new List<string>() { "blah", "google" });
 
             //Act
-            var result = check.ShouldWebsiteBeBlocked("http://google.com");
+            var result = check.ValidateUrl("http://google.com");
 
             //Assert
             Assert.IsTrue(result);

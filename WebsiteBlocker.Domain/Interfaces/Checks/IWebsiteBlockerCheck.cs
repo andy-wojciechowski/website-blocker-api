@@ -2,6 +2,6 @@
 {
     public interface IWebsiteBlockerCheck
     {
-        bool ShouldWebsiteBeBlocked(string url);
+        bool ValidateUrl(string url);
     }
 }

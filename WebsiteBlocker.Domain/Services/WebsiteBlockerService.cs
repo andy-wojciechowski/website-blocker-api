@@ -13,14 +13,14 @@ namespace WebsiteBlocker.Domain.Services
             if (url == null || checks.Any(x => x is null)) throw new ArgumentNullException();
 
             var result = GetWhitelistedCheckResult(url, checks);
-            return result ? !result : checks.Any(x => x.ShouldWebsiteBeBlocked(url));
+            return result ? !result : checks.Any(x => x.ValidateUrl(url));
         }
 
         private bool GetWhitelistedCheckResult(string url, IWebsiteBlockerCheck[] checks)
         {
             var result = false;
             var whitelistedSiteCheck = checks.SingleOrDefault(x => x is WhitelistedSiteCheck);
-            if (whitelistedSiteCheck != null) result = whitelistedSiteCheck.ShouldWebsiteBeBlocked(url);
+            if (whitelistedSiteCheck != null) result = whitelistedSiteCheck.ValidateUrl(url);
             return result;
         }
     }

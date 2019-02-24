@@ -17,7 +17,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new WhitelistedSiteCheck(new List<string>());
 
             //Act
-            check.ShouldWebsiteBeBlocked(null);
+            check.ValidateUrl(null);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
@@ -27,7 +27,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new WhitelistedSiteCheck(null);
 
             //Act
-            check.ShouldWebsiteBeBlocked("http://google.com");
+            check.ValidateUrl("http://google.com");
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new WhitelistedSiteCheck(new List<string>() { "http://website.com" });
 
             //Act
-            var result = check.ShouldWebsiteBeBlocked("http://google.com");
+            var result = check.ValidateUrl("http://google.com");
 
             //Assert
             Assert.IsTrue(result);
@@ -50,7 +50,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new WhitelistedSiteCheck(new List<string>() { "http://google.com" });
 
             //Act
-            var result = check.ShouldWebsiteBeBlocked("http://google.com");
+            var result = check.ValidateUrl("http://google.com");
 
             //Assert
             Assert.IsFalse(result);
@@ -63,7 +63,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new WhitelistedSiteCheck(new List<string>() { "http://GOOGLE.com" });
 
             //Act
-            var result = check.ShouldWebsiteBeBlocked("http://google.com");
+            var result = check.ValidateUrl("http://google.com");
 
             //Assert
             Assert.IsFalse(result);
@@ -76,7 +76,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new WhitelistedSiteCheck(new List<string>() { "http://blah.com", "http://google.com" });
 
             //Act
-            var result = check.ShouldWebsiteBeBlocked("http://google.com");
+            var result = check.ValidateUrl("http://google.com");
 
             //Assert
             Assert.IsFalse(result);

@@ -20,7 +20,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new HtmlCheck(new List<string>());
 
             //Act
-            check.ShouldWebsiteBeBlocked(null);
+            check.ValidateUrl(null);
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentNullException))]
@@ -30,7 +30,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             var check = new HtmlCheck(null);
 
             //Act
-            check.ShouldWebsiteBeBlocked("http://google.com");
+            check.ValidateUrl("http://google.com");
         }
 
         [TestMethod, ExpectedException(typeof(InvalidOperationException))]
@@ -42,7 +42,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             check.Setup(x => x.ReadHtml("http://google.com")).Returns((Stream)null);
 
             //Act
-            check.Object.ShouldWebsiteBeBlocked("http://google.com");
+            check.Object.ValidateUrl("http://google.com");
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             check.Setup(x => x.LoadHtmlDocument(It.IsAny<Stream>())).Returns(document);
 
             //Act
-            var result = check.Object.ShouldWebsiteBeBlocked("http://somewebsite.com");
+            var result = check.Object.ValidateUrl("http://somewebsite.com");
 
             //Assert
             Assert.IsFalse(result);
@@ -74,7 +74,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             check.Setup(x => x.LoadHtmlDocument(It.IsAny<Stream>())).Returns(document);
 
             //Act
-            var result = check.Object.ShouldWebsiteBeBlocked("http://somewebsite.com");
+            var result = check.Object.ValidateUrl("http://somewebsite.com");
 
             //Assert
             Assert.IsTrue(result);
@@ -91,7 +91,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             check.Setup(x => x.LoadHtmlDocument(It.IsAny<Stream>())).Returns(document);
 
             //Act
-            var result = check.Object.ShouldWebsiteBeBlocked("http://somewebsite.com");
+            var result = check.Object.ValidateUrl("http://somewebsite.com");
 
             //Assert
             Assert.IsTrue(result);
@@ -108,7 +108,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             check.Setup(x => x.LoadHtmlDocument(It.IsAny<Stream>())).Returns(document);
 
             //Act
-            var result = check.Object.ShouldWebsiteBeBlocked("http://somewebsite.com");
+            var result = check.Object.ValidateUrl("http://somewebsite.com");
 
             //Assert
             Assert.IsFalse(result);
@@ -125,7 +125,7 @@ namespace WebsiteBlocker.Domain.Tests.Checks
             check.Setup(x => x.LoadHtmlDocument(It.IsAny<Stream>())).Returns(document);
 
             //Act
-            var result = check.Object.ShouldWebsiteBeBlocked("http://somewebsite.com");
+            var result = check.Object.ValidateUrl("http://somewebsite.com");
 
             //Assert
             Assert.IsTrue(result);

@@ -92,7 +92,7 @@ namespace WebsiteBlocker.Domain.Tests.Services
             var checks = new List<IWebsiteBlockerCheck>();
 
             var whitelistedCheck = new Mock<WhitelistedSiteCheck>(new List<string>());
-            whitelistedCheck.Setup(x => x.ShouldWebsiteBeBlocked(url)).Returns(true);
+            whitelistedCheck.Setup(x => x.ValidateUrl(url)).Returns(true);
             checks.Add(whitelistedCheck.Object);
 
             CreateMockedCheck(url, false);
@@ -124,7 +124,7 @@ namespace WebsiteBlocker.Domain.Tests.Services
         private IWebsiteBlockerCheck CreateMockedCheck(string url, bool checkResult)
         {
             var mockedCheck = new Mock<IWebsiteBlockerCheck>();
-            mockedCheck.Setup(x => x.ShouldWebsiteBeBlocked(url)).Returns(checkResult);
+            mockedCheck.Setup(x => x.ValidateUrl(url)).Returns(checkResult);
             return mockedCheck.Object;
         }
 

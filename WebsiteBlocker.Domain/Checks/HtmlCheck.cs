@@ -18,7 +18,7 @@ namespace WebsiteBlocker.Domain.Checks
             BlacklistedWords = blacklistedWords;
         }
 
-        public bool ShouldWebsiteBeBlocked(string url)
+        public bool ValidateUrl(string url)
         {
             if(url == null || this.BlacklistedWords == null) throw new ArgumentNullException();
 
