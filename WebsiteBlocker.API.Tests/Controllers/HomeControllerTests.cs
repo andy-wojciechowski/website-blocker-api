@@ -6,6 +6,7 @@ using WebsiteBlocker.Domain.Interfaces.Facades;
 using WebsiteBlocker.Domain.Dtos;
 using WebsiteBlocker.API.Models;
 using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 
 namespace WebsiteBlocker.API.Tests.Controllers
 {
@@ -102,7 +103,8 @@ namespace WebsiteBlocker.API.Tests.Controllers
 
         private HomeController CreateHomeController(IWebsiteBlockerFacade websiteBlockerFacade = null, WebsiteBlockerAppSettings appSettings = null)
         {
-            return new HomeController(websiteBlockerFacade, appSettings);
+            var options = Options.Create(appSettings);
+            return new HomeController(websiteBlockerFacade, options);
         }
 
         private IWebsiteBlockerFacade MockWebsiteBlockerFacade(string url, bool websiteBlockedValue)
