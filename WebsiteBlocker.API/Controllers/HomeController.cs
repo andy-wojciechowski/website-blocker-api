@@ -4,6 +4,7 @@ using WebsiteBlocker.Domain.Interfaces.Facades;
 using WebsiteBlocker.Domain.Dtos;
 using WebsiteBlocker.API.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Cors;
 
 namespace WebsiteBlocker.API.Controllers
 {
@@ -22,6 +23,7 @@ namespace WebsiteBlocker.API.Controllers
         }
 
         [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         [ProducesResponseType(400)]
         public IActionResult CheckWebsite([FromBody]string url)
         {
