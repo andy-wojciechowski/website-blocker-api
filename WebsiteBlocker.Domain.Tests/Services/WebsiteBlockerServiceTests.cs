@@ -2,6 +2,7 @@
 using Moq;
 using System;
 using System.Collections.Generic;
+using WebsiteBlocker.Domain.Checks;
 using WebsiteBlocker.Domain.Interfaces.Checks;
 using WebsiteBlocker.Domain.Services;
 
@@ -79,6 +80,28 @@ namespace WebsiteBlocker.Domain.Tests.Services
 
             //Assert
             Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void Test_ShouldWebsiteBeBlocked_NotWhitelisted_ShouldNotBlock()
+        {
+            //Arrange
+            var url = "https://google.com";
+            var service = new WebsiteBlockerService();
+
+            var checks = new List<IWebsiteBlockerCheck>();
+
+            var whitelistedCheck = new Mock<WhitelistedSiteCheck>(new List<string>());
+            whitelistedCheck.Setup(x => x.ShouldWebsiteBeBlocked(url)).Returns(true);
+            checks.Add(whitelistedCheck.Object);
+
+            CreateMockedCheck(url, false);
+
+            //Act
+            var result = service.ShouldWebsiteBeBlocked(url, checks.ToArray());
+
+            //Assert
+            Assert.IsFalse(result);
         }
 
         #endregion
